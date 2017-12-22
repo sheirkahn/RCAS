@@ -1,6 +1,7 @@
 #ifndef RCASMAINWINDOW_H
 #define RCASMAINWINDOW_H
 
+#include <QDialog>
 #include <QMainWindow>
 
 namespace Ui {
@@ -17,17 +18,37 @@ public:
 
     virtual void closeEvent (QCloseEvent *);
 
+private:
+
+    bool validate_new_session () const;
+    bool readCandidatesFromCSVFile (const QString& fileName) const;
+
 public slots:
+
     bool on_quit ();
 
 private slots:
 
     void on_RCASMainWindow_iconSizeChanged(const QSize &iconSize);
-    void on_pushButton_2_clicked();
 
-    void on_pushButton_clicked();
+    void on_candidate_button_clicked();
+
+    void on_sessions_back_button_clicked();
+
+    void on_start_button_clicked();
+
+    void on_view_button_clicked();
+
+    void on_sessions_button_clicked();
+
+    void on_candidates2_button_clicked();
+
+    void on_createsession_button_clicked();
+
+    void on_candidatelist_button_clicked();
 
 private:
+
     Ui::RCASMainWindow *ui;
 };
 

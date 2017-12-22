@@ -1,0 +1,2 @@
+# Do not track Qt build directories for RCAS
+build-RCAS-*/

@@ -25,10 +25,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        rcasmainwindow.cpp
+        rcasmainwindow.cpp \
+    rcasmainwindowmethods.cpp
 
 HEADERS += \
-        rcasmainwindow.h
+        rcasmainwindow.h \
 
 FORMS += \
-        rcasmainwindow.ui
+        rcasmainwindow.ui \
