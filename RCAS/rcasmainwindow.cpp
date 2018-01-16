@@ -165,7 +165,7 @@ void RCASMainWindow::on_record_button_clicked()
     else
     {
         recording = true;
-        ui->record_button->setText("Stop");
+        ui->record_button->setText("Pause");
         audioRecorder->record();
     }
 }
