@@ -25,6 +25,18 @@ RCASMainWindow::RCASMainWindow(QWidget *parent) :
 
     // Set current date for the date edit
     ui->assessmentdate_edit->setDate(QDate::currentDate());
+
+    // Audio recorder variables
+    recording = false;
+
+    audioSettings.setCodec("audio/pwm");
+    audioSettings.setQuality(QMultimedia::NormalQuality);
+
+    audioRecorder = new QAudioRecorder;
+    audioRecorder->setEncodingSettings(audioSettings);
+    audioRecorder->setOutputLocation(QUrl::fromLocalFile(QDir::home().filePath("test.wav")));
+    connect(audioRecorder, SIGNAL(durationChanged(qint64)), this, SLOT(updateDuration(qint64)), Qt::UniqueConnection);
+
 }
 
 RCASMainWindow::~RCASMainWindow()
@@ -35,6 +47,11 @@ RCASMainWindow::~RCASMainWindow()
 void RCASMainWindow::on_RCASMainWindow_iconSizeChanged(const QSize &iconSize)
 {
 
+}
+
+void RCASMainWindow::updateDuration(qint64 duration)
+{
+    ui->duration_edit->setText(QDateTime::fromTime_t(duration/1000).toUTC().toString("hh:mm:ss"));
 }
 
 bool RCASMainWindow::on_quit()
@@ -68,8 +85,23 @@ void RCASMainWindow::on_sessions_back_button_clicked()
 // When clicking on the "Start" button, switch to the assessment page of the stacked widget
 void RCASMainWindow::on_start_button_clicked()
 {
-    ui->title_label->setText("Candidate assessment");
-    ui->stackedWidget->setCurrentIndex(2);
+    QList <QTableWidgetItem*> selectedItems = ui->candidate_table->selectedItems();
+    if (selectedItems.empty())
+    {
+        QMessageBox::warning (this, "Select a candidate", "Please select a candidate from the list to start the assessment.");
+        return;
+    }
+    else
+    {
+        ui->record_nameedit->setText(selectedItems[0]->text());
+        ui->record_idedit->setText(selectedItems[2]->text());
+        ui->record_processedit->setText(selectedItems[4]->text());
+
+        ui->title_label->setText("Candidate assessment");
+        ui->stackedWidget->setCurrentIndex(2);
+
+        ui->duration_edit->setText("00:00:00");
+    }
 }
 
 // When clicking on the "Review" button, switch to the assessment page of the stacked widget
@@ -119,5 +151,21 @@ void RCASMainWindow::on_candidatelist_button_clicked()
     if (QFile::exists(newFileName))
     {
         ui->candidatelist_edit->setText(newFileName);
+    }
+}
+
+void RCASMainWindow::on_record_button_clicked()
+{
+    if (recording)
+    {
+        recording = false;
+        ui->record_button->setText("Record");
+        audioRecorder->pause();
+    }
+    else
+    {
+        recording = true;
+        ui->record_button->setText("Stop");
+        audioRecorder->record();
     }
 }

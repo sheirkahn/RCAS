@@ -1,6 +1,8 @@
 #ifndef RCASMAINWINDOW_H
 #define RCASMAINWINDOW_H
 
+#include <QAudioEncoderSettings>
+#include <QAudioRecorder>
 #include <QDialog>
 #include <QMainWindow>
 
@@ -47,9 +49,16 @@ private slots:
 
     void on_candidatelist_button_clicked();
 
+    void on_record_button_clicked();
+
+    void updateDuration (qint64 duration);
+
 private:
 
-    Ui::RCASMainWindow *ui;
+    Ui::RCASMainWindow*     ui;
+    bool                    recording;
+    QAudioRecorder*         audioRecorder;
+    QAudioEncoderSettings   audioSettings;
 };
 
 #endif // RCASMAINWINDOW_H
