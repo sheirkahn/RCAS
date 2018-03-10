@@ -26,10 +26,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         rcasmainwindow.cpp \
-    rcasmainwindowmethods.cpp
+    rcasmainwindowmethods.cpp \
+    RCASSoundManager.cpp \
+    RCASCandidate.cpp \
+    RCASAssessmentError.cpp
 
 HEADERS += \
         rcasmainwindow.h \
+    RCASSoundManager.h \
+    RCASAssessmentError.h \
+    RCASCandidate.h
 
 FORMS += \
         rcasmainwindow.ui \

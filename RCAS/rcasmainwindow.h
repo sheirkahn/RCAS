@@ -5,6 +5,7 @@
 #include <QAudioRecorder>
 #include <QDialog>
 #include <QMainWindow>
+#include <QMediaPlayer>
 
 namespace Ui {
 class RCASMainWindow;
@@ -59,6 +60,7 @@ private:
     bool                    recording;
     QAudioRecorder*         audioRecorder;
     QAudioEncoderSettings   audioSettings;
+    QMediaPlayer*           audioPlayer;
 };
 
 #endif // RCASMAINWINDOW_H

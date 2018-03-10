@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QSound>
 
 RCASMainWindow::RCASMainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -33,15 +34,24 @@ RCASMainWindow::RCASMainWindow(QWidget *parent) :
     audioSettings.setQuality(QMultimedia::NormalQuality);
 
     audioRecorder = new QAudioRecorder;
-    audioRecorder->setEncodingSettings(audioSettings);
-    audioRecorder->setOutputLocation(QUrl::fromLocalFile(QDir::home().filePath("test.wav")));
-    connect(audioRecorder, SIGNAL(durationChanged(qint64)), this, SLOT(updateDuration(qint64)), Qt::UniqueConnection);
+//    audioRecorder->setEncodingSettings(audioSettings);
+//    audioRecorder->setOutputLocation(QUrl::fromLocalFile(QDir::home().filePath("test.wav")));
+//    connect(audioRecorder, SIGNAL(durationChanged(qint64)), this, SLOT(updateDuration(qint64)), Qt::UniqueConnection);
 
+    audioPlayer = new QMediaPlayer;
+    audioPlayer->setAudioRole(QAudio::UnknownRole);
+    audioPlayer->setMedia (QUrl::fromLocalFile("0267.wav"));
+    qDebug() << audioPlayer->supportedAudioRoles();
+    qDebug() << QUrl::fromLocalFile("DancingQueen.mp3");
+    qDebug ("Available: %s", (audioPlayer->isAudioAvailable() ? "Yes" : "No"));
+    // QSound::play (QDir::home().filePath("0267.wav"));
 }
 
 RCASMainWindow::~RCASMainWindow()
 {
     delete ui;
+    delete audioRecorder;
+    delete audioPlayer;
 }
 
 void RCASMainWindow::on_RCASMainWindow_iconSizeChanged(const QSize &iconSize)
@@ -156,6 +166,7 @@ void RCASMainWindow::on_candidatelist_button_clicked()
 
 void RCASMainWindow::on_record_button_clicked()
 {
+#if 0
     if (recording)
     {
         recording = false;
@@ -168,4 +179,6 @@ void RCASMainWindow::on_record_button_clicked()
         ui->record_button->setText("Pause");
         audioRecorder->record();
     }
+#else
+#endif
 }
