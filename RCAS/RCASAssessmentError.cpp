@@ -5,6 +5,7 @@ QString RCASAssessmentError::textString () const
     QString errStr;
     switch (mType)
     {
+    case RCAS_NO_ERROR: errStr = QString (""); break;
     case FATAL_FIRST_LANGUAGE_INFLUENCE: errStr = QString ("First language influence"); break;
     case FATAL_CLARITY_OF_SPEECH: errStr = QString ("Clarity of speech"); break;
     case FATAL_LOSS_OF_WORDS: errStr = QString ("Loss of words"); break;
@@ -17,24 +18,22 @@ QString RCASAssessmentError::textString () const
     case LANG_VOCALIZATION: errStr = QString ("Vocalization"); break;
     case CSP_CALL_FLOW_PROTOCOL_COMPLIANCE: errStr = QString ("Call flow protocol compliance"); break;
     case CSP_PERSONALIZATION: errStr = QString ("Personalization"); break;
-    case CSP_LISTENING_SKILLS: errStr = QString ("Listening skills"); break;
     case CSP_ACKNOWLEDGEMENT_EMOTIONS_EMPATHY: errStr = QString ("Acknowledgement - emotions empathy"); break;
-    case CSP_OWNERSHIP_CALL_CONTROL: errStr = QString ("Ownership - call control"); break;
+    case CSP_OWNERSHIP_CALL_CONTROL: errStr = QString ("Ownership/call control"); break;
     case CSP_PROBING_ENQUIRING: errStr = QString ("Probing/enquiring"); break;
     case CSP_QUALITY_OF_SOLUTION: errStr = QString ("Quality of solution"); break;
-    case CSP_EXPECTATION_SETTING: errStr = QString ("Expectation setting"); break;
     }
 
     return errStr;
 }
 
-void RCASAssessmentError::write (QJsonObject &json) const
+void RCASAssessmentError::writeToJson (QJsonObject &json)
 {
     json["time"] = mTime;
     json["type"] = mType;
 }
 
-void RCASAssessmentError::read (const QJsonObject &json)
+void RCASAssessmentError::readFromJson (const QJsonObject &json)
 {
     if (json.contains("time") && json["time"].isDouble())
         mTime = (qint64) json["time"].toInt();

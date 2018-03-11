@@ -6,6 +6,9 @@
 #include <QDialog>
 #include <QMainWindow>
 #include <QMediaPlayer>
+#include <QUrl>
+#include "RCASSessionManager.h"
+#include "RCASSoundManager.h"
 
 namespace Ui {
 class RCASMainWindow;
@@ -23,8 +26,18 @@ public:
 
 private:
 
+    void loadSettings ();
+    void loadSessionsFromJson ();
+    void saveSessionsToJson ();
     bool validate_new_session () const;
-    bool readCandidatesFromCSVFile (const QString& fileName) const;
+
+    bool createSessionFromCSVFile (const QString& fileName);
+    void loadSession (const RCASSession session);
+    void assessCandidate (const RCASCandidate candidate);
+
+    void loadSessionsPage (bool firstLoad = false);
+    void loadCandidatesPage ();
+    void loadAssessmentPage ();
 
 public slots:
 
@@ -54,13 +67,22 @@ private slots:
 
     void updateDuration (qint64 duration);
 
+    void on_loadsession_button_clicked();
+
 private:
 
     Ui::RCASMainWindow*     ui;
-    bool                    recording;
-    QAudioRecorder*         audioRecorder;
-    QAudioEncoderSettings   audioSettings;
-    QMediaPlayer*           audioPlayer;
+    QString                 mDataFolder;
+    QString                 mSessionListFile;
+
+    RCASSessionManager      mSessionManager;
+    RCASSession             mSession;
+    RCASCandidate           mCandidate;
+    int                     mSessionID;
+    int                     mCandidateID;
+
+    RCASSoundManager        mAudioManager;
+    RCASSoundManagerState   mSoundManagerState;
 };
 
 #endif // RCASMAINWINDOW_H

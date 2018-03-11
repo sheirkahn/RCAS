@@ -17,12 +17,10 @@ enum RCASErrorType {
     LANG_VOCALIZATION = 10,
     CSP_CALL_FLOW_PROTOCOL_COMPLIANCE = 11,
     CSP_PERSONALIZATION = 12,
-    CSP_LISTENING_SKILLS = 13,
-    CSP_ACKNOWLEDGEMENT_EMOTIONS_EMPATHY = 14,
-    CSP_OWNERSHIP_CALL_CONTROL = 15,
-    CSP_PROBING_ENQUIRING = 16,
-    CSP_QUALITY_OF_SOLUTION = 17,
-    CSP_EXPECTATION_SETTING = 18
+    CSP_ACKNOWLEDGEMENT_EMOTIONS_EMPATHY = 13,
+    CSP_OWNERSHIP_CALL_CONTROL = 14,
+    CSP_PROBING_ENQUIRING = 15,
+    CSP_QUALITY_OF_SOLUTION = 16
 };
 
 class RCASAssessmentError
@@ -43,8 +41,8 @@ public:
 
     QString textString () const;
 
-    void write (QJsonObject &json) const;
-    void read (const QJsonObject &json);
+    void writeToJson (QJsonObject &json);
+    void readFromJson (const QJsonObject &json);
 
 private:
 

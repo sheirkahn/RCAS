@@ -19,43 +19,48 @@ public:
 
     RCASCandidate ();
 
-    void setName (const QString& name) { mName = name; }
-    void setUID (int ID) { mUID = ID; }
-    void setPhone (int phone) { mPhone = phone; }
-    void setEmail (const QString& email) { mEmail = email; }
-    void setProcess (const QString& process) { mProcess = process; }
-    void setRecruiter (const QString& recruiter) { mRecruiter = recruiter; }
-    void setTL (const QString& TL) { mTL = TL; }
-    void setCollege (const QString& college) { mCollege = college; }
-    void setSchool (const QString& school) { mSchool = school; }
-    void setLocation (const QString& location) { mLocation = location; }
-    void setAssessmentStatus (RCASCandidateStatus status) { mAssessmentStatus = status; }
-    void addError (const RCASAssessmentError& error) { mErrorList.append(error); }
+    void setName (const QString& name) { mName = name; mModified = true; }
+    void setUID (const QString& ID) { mUID = ID; mModified = true; }
+    void setPhone (const QString& phone) { mPhone = phone; mModified = true; }
+    void setEmail (const QString& email) { mEmail = email; mModified = true; }
+    void setProcess (const QString& process) { mProcess = process; mModified = true; }
+    void setRecruiter (const QString& recruiter) { mRecruiter = recruiter; mModified = true; }
+    void setTL (const QString& TL) { mTL = TL; mModified = true; }
+    void setCollege (const QString& college) { mCollege = college; mModified = true; }
+    void setSchool (const QString& school) { mSchool = school; mModified = true; }
+    void setLocation (const QString& location) { mLocation = location; mModified = true; }
+    void setAudioFilePath (const QString& path) { mAudioFilePath = path; mModified = true; }
+    void setAssessmentStatus (RCASCandidateStatus status) { mAssessmentStatus = status; mModified = true; }
+    void addError (const RCASAssessmentError& error) { mErrorList.append(error); mModified = true; }
+    void setModified (bool val) { mModified = val; }
 
-    QString name () const { return mName; }
-    int UID () const { return mUID; }
-    int phone () const { return mPhone; }
-    QString email () const { return mEmail; }
-    QString process () const { return mProcess; }
-    QString recruiter () const { return mRecruiter; }
-    QString TL () const { return mTL; }
-    QString college () const { return mCollege; }
-    QString school () const { return mSchool; }
-    QString location () const { return mLocation; }
+    const QString & name () const { return mName; }
+    const QString & UID () const { return mUID; }
+    const QString & phone () const { return mPhone; }
+    const QString & email () const { return mEmail; }
+    const QString & process () const { return mProcess; }
+    const QString & recruiter () const { return mRecruiter; }
+    const QString & TL () const { return mTL; }
+    const QString & college () const { return mCollege; }
+    const QString & school () const { return mSchool; }
+    const QString & location () const { return mLocation; }
+    const QString & audioFilePath () const { return mAudioFilePath; }
     RCASCandidateStatus assessmentStatus () const { return mAssessmentStatus; }
     int numAssessmentErrors () const { return mErrorList.size(); }
     const RCASAssessmentError & assementError (int iError) const { return mErrorList[iError]; }
+    bool modified () const { return mModified; }
 
-    void write (QJsonObject &json) const;
-    void read (const QJsonObject &json);
+    void writeToJson (QJsonObject &json);
+    void readFromJson (const QJsonObject &json);
 
-    double assessmentScore () const;
+    int assessmentScore () const;
 
 private:
 
+    bool mModified;
     QString mName;
-    int mUID;
-    int mPhone;
+    QString mUID;
+    QString mPhone;
     QString mEmail;
     QString mProcess;
     QString mRecruiter;
@@ -63,6 +68,7 @@ private:
     QString mCollege;
     QString mSchool;
     QString mLocation;
+    QString mAudioFilePath;
     RCASCandidateStatus mAssessmentStatus;
 
     QVector <RCASAssessmentError> mErrorList;

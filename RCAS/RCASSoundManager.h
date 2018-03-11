@@ -7,6 +7,12 @@
 #include <QAudioRecorder>
 #include <QMediaPlayer>
 
+enum RCASSoundManagerState
+{
+    RCAS_RECORD = 0,
+    RCAS_REVIEW = 1
+};
+
 class RCASSoundManager
 {
 public:

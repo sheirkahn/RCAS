@@ -1,4 +1,4 @@
-#include "rcasmainwindow.h"
+#include "RCASMainwindow.h"
 #include "ui_rcasmainwindow.h"
 #include <QCloseEvent>
 #include <QFile>
@@ -16,48 +16,79 @@ RCASMainWindow::RCASMainWindow(QWidget *parent) :
     connect (ui->actionQuit, SIGNAL(triggered(bool)), this, SLOT (on_quit()), Qt::UniqueConnection);
     connect (ui->createsession_button, SIGNAL(clicked(bool)), this, SLOT (on_createsession_button_clicked()), Qt::UniqueConnection);
 
-    // Set up the first page of the stacked widget
-    ui->stackedWidget->setCurrentIndex(0);
-    ui->title_label->setText("Please select an option");
+    // AUDIO RECORDER DURATION SIGNAL
+    // connect(audioRecorder, SIGNAL(durationChanged(qint64)), this, SLOT(updateDuration(qint64)), Qt::UniqueConnection);
 
-    // Set tab names
-    ui->tabWidget->setTabText (0, "New assessment session");
-    ui->tabWidget->setTabText (1, "Older assessment sessions");
+    // Load settings
+    loadSettings();
 
-    // Set current date for the date edit
-    ui->assessmentdate_edit->setDate(QDate::currentDate());
+    // Load the first page (sessions page, with create session tab selected)
+    loadSessionsPage(true);
 
-    // Audio recorder variables
-    recording = false;
-
-    audioSettings.setCodec("audio/pwm");
-    audioSettings.setQuality(QMultimedia::NormalQuality);
-
-    audioRecorder = new QAudioRecorder;
-//    audioRecorder->setEncodingSettings(audioSettings);
-//    audioRecorder->setOutputLocation(QUrl::fromLocalFile(QDir::home().filePath("test.wav")));
-//    connect(audioRecorder, SIGNAL(durationChanged(qint64)), this, SLOT(updateDuration(qint64)), Qt::UniqueConnection);
-
-    audioPlayer = new QMediaPlayer;
-    audioPlayer->setAudioRole(QAudio::UnknownRole);
-    audioPlayer->setMedia (QUrl::fromLocalFile("0267.wav"));
-    qDebug() << audioPlayer->supportedAudioRoles();
-    qDebug() << QUrl::fromLocalFile("DancingQueen.mp3");
-    qDebug ("Available: %s", (audioPlayer->isAudioAvailable() ? "Yes" : "No"));
-    // QSound::play (QDir::home().filePath("0267.wav"));
+    // Load existing sessions from JSON file
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+    loadSessionsFromJson ();
+    QApplication::restoreOverrideCursor();
 }
 
 RCASMainWindow::~RCASMainWindow()
 {
     delete ui;
-    delete audioRecorder;
-    delete audioPlayer;
+}
+
+void RCASMainWindow::loadSessionsPage (bool firstLoad)
+{
+    ui->stackedWidget->setCurrentIndex(0);
+    ui->title_label->setText("Please select an option");
+
+    if (firstLoad)
+    {
+        // Set tab names
+        ui->tabWidget->setTabText (0, "New assessment session");
+        ui->tabWidget->setTabText (1, "Older assessment sessions");
+
+        // Set current date for the date edit
+        ui->assessmentdate_edit->setDate(QDate::currentDate());
+
+        ui->tabWidget->setCurrentIndex(0);
+        ui->assessorname_edit->setFocus();
+    }
+}
+
+void RCASMainWindow::loadCandidatesPage()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+    ui->title_label->setText("List of candidates");
+
+    if (mSoundManagerState == RCAS_RECORD)
+    {
+        ui->startassessment_button->setVisible(true);
+        ui->review_button->setVisible(false);
+    }
+    else
+    {
+        ui->startassessment_button->setVisible(false);
+        ui->review_button->setVisible(true);
+    }
+}
+
+void RCASMainWindow::loadAssessmentPage()
+{
+    mCandidateID = ui->candidate_table->currentRow();
+    mCandidate = mSession.candidate(mCandidateID);
+
+    ui->stackedWidget->setCurrentIndex(2);
+    ui->title_label->setText("Candidate assessment");
+
+    ui->recordplay_button->setText(mSoundManagerState == RCAS_RECORD ? "Record" : "Play");
+    ui->recordplay_button->setEnabled(false);
+
+    ui->startstop_button->setText("Start");
+    ui->startstop_button->setEnabled(true);
 }
 
 void RCASMainWindow::on_RCASMainWindow_iconSizeChanged(const QSize &iconSize)
-{
-
-}
+{}
 
 void RCASMainWindow::updateDuration(qint64 duration)
 {
@@ -66,6 +97,16 @@ void RCASMainWindow::updateDuration(qint64 duration)
 
 bool RCASMainWindow::on_quit()
 {
+    if (mSessionManager.modified())
+    {
+        if (QMessageBox::question
+                (this, "Save changes?", "You have unsaved changes. Save changes before quitting?") ==
+                QMessageBox::Yes)
+        {
+            saveSessionsToJson();
+        }
+    }
+
     this->close();
     return true;
 }
@@ -105,7 +146,6 @@ void RCASMainWindow::on_start_button_clicked()
     {
         ui->record_nameedit->setText(selectedItems[0]->text());
         ui->record_idedit->setText(selectedItems[2]->text());
-        ui->record_processedit->setText(selectedItems[4]->text());
 
         ui->title_label->setText("Candidate assessment");
         ui->stackedWidget->setCurrentIndex(2);
@@ -117,8 +157,7 @@ void RCASMainWindow::on_start_button_clicked()
 // When clicking on the "Review" button, switch to the assessment page of the stacked widget
 void RCASMainWindow::on_view_button_clicked()
 {
-    ui->title_label->setText("Candidate assessment");
-    ui->stackedWidget->setCurrentIndex(2);
+    loadAssessmentPage();
 }
 
 // When clicking on the "<< Sessions list" button, switch to the sessions page of the stacked widget
@@ -135,33 +174,53 @@ void RCASMainWindow::on_candidates2_button_clicked()
     ui->stackedWidget->setCurrentIndex(1);
 }
 
+// When clicking the "Create session" button
 void RCASMainWindow::on_createsession_button_clicked()
 {
     if (!this->validate_new_session())
     {
-        QMessageBox::information (this, "Check details", "Incomplete information provided to create a new assessment session. Please check the details provided.");
+        QMessageBox::warning (this, "Check details", "Incomplete information provided to create a new assessment session. Please check the details provided.");
         return;
     }
 
-    // Read the CSV file and populate the candidate list
-    if (!this->readCandidatesFromCSVFile (ui->candidatelist_edit->text()))
+    if (mSessionManager.sessionExists (ui->assessmentdate_edit->text(), ui->assessmentdate_edit->text()))
+    {
+        QMessageBox::warning (this, "Session exists", "Session with this assessor name and date already exists. Please load it from saved sessions.");
+        return;
+    }
+
+    // Read the CSV file and create a new session from it
+    if (!this->createSessionFromCSVFile (ui->candidatelist_edit->text()))
     {
         QMessageBox::critical (this, "Invalid CSV file", "The selected file does not contain the needed information. Please make sure to select the right file.");
         return;
     }
 
-    ui->title_label->setText("List of candidates");
-    ui->stackedWidget->setCurrentIndex(1);
+    mSoundManagerState = RCAS_RECORD;
+
+    loadCandidatesPage();
 }
 
+// When clicking the "select CSV file" button
 void RCASMainWindow::on_candidatelist_button_clicked()
 {
-
     QString newFileName = QFileDialog::getOpenFileName(this, tr("Open File"), QDir::homePath(), tr("CSV files (*.csv)"));
     if (QFile::exists(newFileName))
     {
         ui->candidatelist_edit->setText(newFileName);
     }
+}
+
+// When clicking the button to load candidates from a selected session
+void RCASMainWindow::on_loadsession_button_clicked()
+{
+    mSession = mSessionManager.session(ui->sessionsTable->currentRow());
+    mSessionID = mSession.ID();
+    loadSession (mSession);
+
+    mSoundManagerState = RCAS_REVIEW;
+
+    loadCandidatesPage();
 }
 
 void RCASMainWindow::on_record_button_clicked()

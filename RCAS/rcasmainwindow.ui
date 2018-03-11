@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>480</height>
+    <width>771</width>
+    <height>523</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,8 +28,8 @@
      <rect>
       <x>4</x>
       <y>4</y>
-      <width>631</width>
-      <height>431</height>
+      <width>766</width>
+      <height>471</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -104,7 +104,7 @@
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="start_page">
           <widget class="QTabWidget" name="tabWidget">
@@ -112,8 +112,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>626</width>
-             <height>366</height>
+             <width>716</width>
+             <height>406</height>
             </rect>
            </property>
            <property name="currentIndex">
@@ -126,8 +126,8 @@
             <widget class="QFrame" name="frame_2">
              <property name="geometry">
               <rect>
-               <x>10</x>
-               <y>4</y>
+               <x>45</x>
+               <y>35</y>
                <width>426</width>
                <height>151</height>
               </rect>
@@ -170,6 +170,9 @@
                 <layout class="QHBoxLayout" name="horizontalLayout_7">
                  <item>
                   <widget class="QDateEdit" name="assessmentdate_edit">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
                    <property name="minimumDate">
                     <date>
                      <year>2017</year>
@@ -181,7 +184,7 @@
                     <string>dd-MMM-yyyy</string>
                    </property>
                    <property name="calendarPopup">
-                    <bool>true</bool>
+                    <bool>false</bool>
                    </property>
                   </widget>
                  </item>
@@ -198,6 +201,9 @@
                 <widget class="QLineEdit" name="assessorname_edit">
                  <property name="placeholderText">
                   <string>Enter name</string>
+                 </property>
+                 <property name="clearButtonEnabled">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
@@ -237,8 +243,8 @@
             <widget class="QPushButton" name="createsession_button">
              <property name="geometry">
               <rect>
-               <x>460</x>
-               <y>5</y>
+               <x>525</x>
+               <y>35</y>
                <width>151</width>
                <height>32</height>
               </rect>
@@ -257,8 +263,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>621</width>
-               <height>341</height>
+               <width>711</width>
+               <height>376</height>
               </rect>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -266,7 +272,7 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="QTableWidget" name="tableWidget">
+               <widget class="QTableWidget" name="sessionsTable">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                   <horstretch>0</horstretch>
@@ -291,9 +297,17 @@
                 <property name="sortingEnabled">
                  <bool>true</bool>
                 </property>
+                <attribute name="horizontalHeaderStretchLastSection">
+                 <bool>true</bool>
+                </attribute>
                 <column>
                  <property name="text">
-                  <string>Date</string>
+                  <string>Session ID</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Session Date</string>
                  </property>
                 </column>
                 <column>
@@ -325,7 +339,7 @@
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="candidate_button">
+                 <widget class="QPushButton" name="loadsession_button">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
@@ -336,7 +350,7 @@
                    </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>Candidates list   &gt;&gt;</string>
+                   <string>Load session   &gt;&gt;</string>
                   </property>
                  </widget>
                 </item>
@@ -366,8 +380,8 @@
             <rect>
              <x>-1</x>
              <y>-1</y>
-             <width>631</width>
-             <height>371</height>
+             <width>716</width>
+             <height>406</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -382,6 +396,12 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="horizontalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOn</enum>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QAbstractScrollArea::AdjustToContents</enum>
+              </property>
               <property name="alternatingRowColors">
                <bool>true</bool>
               </property>
@@ -391,6 +411,27 @@
               <property name="selectionBehavior">
                <enum>QAbstractItemView::SelectRows</enum>
               </property>
+              <attribute name="horizontalHeaderCascadingSectionResizes">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="horizontalHeaderDefaultSectionSize">
+               <number>70</number>
+              </attribute>
+              <attribute name="horizontalHeaderMinimumSectionSize">
+               <number>20</number>
+              </attribute>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderDefaultSectionSize">
+               <number>40</number>
+              </attribute>
+              <attribute name="verticalHeaderMinimumSectionSize">
+               <number>19</number>
+              </attribute>
               <column>
                <property name="text">
                 <string>Name</string>
@@ -418,7 +459,7 @@
               </column>
               <column>
                <property name="text">
-                <string>New Column</string>
+                <string>Recruiter</string>
                </property>
               </column>
               <column>
@@ -428,12 +469,12 @@
               </column>
               <column>
                <property name="text">
-                <string>College Name</string>
+                <string>College</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>New Column</string>
+                <string>School</string>
                </property>
               </column>
               <column>
@@ -465,7 +506,7 @@
                </spacer>
               </item>
               <item>
-               <widget class="QPushButton" name="start_button">
+               <widget class="QPushButton" name="startassessment_button">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -473,12 +514,12 @@
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>Start assessment</string>
+                 <string>Start assessment &gt;&gt;</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="view_button">
+               <widget class="QPushButton" name="review_button">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -486,7 +527,7 @@
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>View assessment</string>
+                 <string>Review  &gt;&gt;</string>
                 </property>
                </widget>
               </item>
@@ -512,7 +553,7 @@
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>&lt;&lt;   Sessions list</string>
+                 <string>&lt;&lt;   Sessions</string>
                 </property>
                </widget>
               </item>
@@ -522,24 +563,24 @@
           </widget>
          </widget>
          <widget class="QWidget" name="assessment_page">
-          <widget class="QWidget" name="horizontalLayoutWidget_4">
+          <widget class="QFrame" name="horizontalFrame_4">
            <property name="geometry">
             <rect>
              <x>-1</x>
              <y>-1</y>
-             <width>631</width>
-             <height>371</height>
+             <width>761</width>
+             <height>406</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_6">
             <property name="rightMargin">
-             <number>0</number>
+             <number>1</number>
             </property>
             <item>
              <widget class="QFrame" name="frame">
               <property name="minimumSize">
                <size>
-                <width>400</width>
+                <width>340</width>
                 <height>0</height>
                </size>
               </property>
@@ -552,10 +593,10 @@
               <widget class="QWidget" name="verticalLayoutWidget_2">
                <property name="geometry">
                 <rect>
-                 <x>0</x>
+                 <x>5</x>
                  <y>0</y>
-                 <width>401</width>
-                 <height>366</height>
+                 <width>331</width>
+                 <height>351</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -567,6 +608,58 @@
                   <property name="topMargin">
                    <number>0</number>
                   </property>
+                  <item row="0" column="4">
+                   <widget class="QPushButton" name="startstop_button">
+                    <property name="text">
+                     <string>Start</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="3">
+                   <widget class="QPushButton" name="recordplay_button">
+                    <property name="text">
+                     <string>Record</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_7">
+                    <property name="text">
+                     <string>   Duration</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QLineEdit" name="duration_edit">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>30</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>50</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="inputMask">
+                     <string>xx:xx:xx</string>
+                    </property>
+                    <property name="readOnly">
+                     <bool>true</bool>
+                    </property>
+                    <property name="placeholderText">
+                     <string>00:00:00</string>
+                    </property>
+                   </widget>
+                  </item>
                   <item row="0" column="2">
                    <spacer name="horizontalSpacer_2">
                     <property name="orientation">
@@ -580,33 +673,6 @@
                     </property>
                    </spacer>
                   </item>
-                  <item row="0" column="1">
-                   <widget class="QLineEdit" name="duration_edit">
-                    <property name="inputMask">
-                     <string>xx:xx:xx</string>
-                    </property>
-                    <property name="readOnly">
-                     <bool>true</bool>
-                    </property>
-                    <property name="placeholderText">
-                     <string>00:00:00</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="0">
-                   <widget class="QLabel" name="label_7">
-                    <property name="text">
-                     <string>Duration</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="3">
-                   <widget class="QPushButton" name="record_button">
-                    <property name="text">
-                     <string>Record</string>
-                    </property>
-                   </widget>
-                  </item>
                  </layout>
                 </item>
                 <item>
@@ -614,9 +680,15 @@
                   <property name="alternatingRowColors">
                    <bool>true</bool>
                   </property>
+                  <property name="selectionMode">
+                   <enum>QAbstractItemView::SingleSelection</enum>
+                  </property>
                   <property name="selectionBehavior">
                    <enum>QAbstractItemView::SelectRows</enum>
                   </property>
+                  <attribute name="horizontalHeaderDefaultSectionSize">
+                   <number>70</number>
+                  </attribute>
                   <attribute name="horizontalHeaderStretchLastSection">
                    <bool>true</bool>
                   </attribute>
@@ -630,99 +702,383 @@
                   </column>
                   <column>
                    <property name="text">
-                    <string>Error type</string>
-                   </property>
-                  </column>
-                  <column>
-                   <property name="text">
-                    <string>Comment</string>
+                    <string>Description</string>
                    </property>
                   </column>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="errorButton">
-                  <property name="text">
-                   <string>Error</string>
+                 <layout class="QGridLayout" name="gridLayout_5">
+                  <property name="topMargin">
+                   <number>0</number>
                   </property>
-                 </widget>
+                  <item row="0" column="1">
+                   <widget class="QLineEdit" name="scoreEdit">
+                    <property name="readOnly">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="4">
+                   <widget class="QLineEdit" name="resultEdit">
+                    <property name="readOnly">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="3">
+                   <widget class="QLabel" name="label_11">
+                    <property name="text">
+                     <string>Result</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_10">
+                    <property name="text">
+                     <string>Score</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="2">
+                   <spacer name="horizontalSpacer_3">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
                 </item>
                </layout>
               </widget>
              </widget>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_6">
-              <item>
-               <layout class="QFormLayout" name="formLayout">
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_4">
-                  <property name="text">
-                   <string>Name</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_5">
-                  <property name="text">
-                   <string>ID #</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_6">
-                  <property name="text">
-                   <string>Process</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLineEdit" name="record_nameedit">
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QLineEdit" name="record_idedit">
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QLineEdit" name="record_processedit">
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <spacer name="verticalSpacer_7">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="candidates2_button">
-                <property name="text">
-                 <string>&lt;&lt;   Candidates list</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <widget class="QFrame" name="">
+              <layout class="QVBoxLayout" name="verticalLayout_6">
+               <item>
+                <layout class="QFormLayout" name="formLayout">
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_4">
+                   <property name="text">
+                    <string>Candidate name</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLineEdit" name="record_nameedit">
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_5">
+                   <property name="text">
+                    <string>Identification  #</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLineEdit" name="record_idedit">
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_10">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <layout class="QGridLayout" name="gridLayout_4">
+                 <item row="2" column="2">
+                  <widget class="QPushButton" name="pushButton_4">
+                   <property name="text">
+                    <string>&amp;ROS</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>R</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLabel" name="label_6">
+                   <property name="text">
+                    <string>Fatal</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="4">
+                  <widget class="QPushButton" name="pushButton_9">
+                   <property name="text">
+                    <string>&amp;Fillers</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>F</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="3">
+                  <widget class="QPushButton" name="pushButton_12">
+                   <property name="text">
+                    <string>^&amp;Personal.</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>Meta+P</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3">
+                  <widget class="QPushButton" name="pushButton_3">
+                   <property name="text">
+                    <string>Clarity (2)</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>2</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="4">
+                  <widget class="QPushButton" name="pushButton_13">
+                   <property name="text">
+                    <string>^&amp;Acknowl.</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>Meta+A</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="2">
+                  <widget class="QPushButton" name="pushButton_11">
+                   <property name="text">
+                    <string>^&amp;Call flow</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>Meta+C</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="3">
+                  <widget class="QPushButton" name="pushButton_8">
+                   <property name="text">
+                    <string>&amp;Comprehn.</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>C</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QPushButton" name="pushButton">
+                   <property name="toolTip">
+                    <string extracomment="First language influence"/>
+                   </property>
+                   <property name="text">
+                    <string>FLI (1)</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>1</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <spacer name="verticalSpacer_7">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>10</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="2" column="3">
+                  <widget class="QPushButton" name="pushButton_5">
+                   <property name="text">
+                    <string>&amp;Grammar</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>G</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="1">
+                  <widget class="QLabel" name="label_9">
+                   <property name="text">
+                    <string>CSP</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="2">
+                  <widget class="QPushButton" name="pushButton_10">
+                   <property name="text">
+                    <string>&amp;Vocalizn.</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>V</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="2">
+                  <widget class="QPushButton" name="pushButton_7">
+                   <property name="text">
+                    <string>&amp;Pronunc.</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>P</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLabel" name="label_8">
+                   <property name="text">
+                    <string>Language</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="4">
+                  <widget class="QPushButton" name="pushButton_6">
+                   <property name="text">
+                    <string>&amp;Words</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>W</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="4">
+                  <widget class="QPushButton" name="pushButton_2">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>Wd. loss (3)</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>3</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="1">
+                  <spacer name="verticalSpacer_8">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>10</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="7" column="2">
+                  <widget class="QPushButton" name="pushButton_14">
+                   <property name="text">
+                    <string>^&amp;Ownersh.</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>Meta+O</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="7" column="3">
+                  <widget class="QPushButton" name="pushButton_15">
+                   <property name="text">
+                    <string>^&amp;Enquiry</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>Meta+E</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="7" column="4">
+                  <widget class="QPushButton" name="pushButton_16">
+                   <property name="text">
+                    <string>^&amp;Soln. qual.</string>
+                   </property>
+                   <property name="shortcut">
+                    <string>Meta+S</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_9">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QPushButton" name="candidates2_button">
+                 <property name="text">
+                  <string>&lt;&lt;   Candidates list</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -739,7 +1095,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>640</width>
+     <width>771</width>
      <height>22</height>
     </rect>
    </property>
