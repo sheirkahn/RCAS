@@ -34,7 +34,7 @@ public slots:
     void playAudio (qint64 loc = 0);
     void pausePlayback ();
 
-private:
+public:
 
     QAudioEncoderSettings   audioSettings;
     QAudioRecorder          audioRecorder;

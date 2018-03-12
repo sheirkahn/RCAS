@@ -31,7 +31,10 @@ SOURCES += \
     RCASSession.cpp \
     RCASSessionManager.cpp \
     RCASMainwindow.cpp \
-    RCASMainwindowMethods.cpp
+    RCASMainwindowMethods.cpp \
+    rcasmainwindowsessionslots.cpp \
+    rcasmainwindowcandidatesslots.cpp \
+    rcasmainwindowassessmentslots.cpp
 
 HEADERS += \
     RCASSoundManager.h \

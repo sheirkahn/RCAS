@@ -23,6 +23,12 @@ void RCASSessionManager::addSession(const RCASSession &session)
     mModified = true;
 }
 
+void RCASSessionManager::setSession (int iSession, const RCASSession &session)
+{
+    mSessionList[iSession] = session;
+    mModified = true;
+}
+
 bool RCASSessionManager::sessionExists(const QString &name, const QString &date) const
 {
     foreach (const RCASSession session, mSessionList)

@@ -183,7 +183,7 @@ bool RCASMainWindow::createSessionFromCSVFile (const QString &fileName)
         candidate.setSchool (QString (candidateDetails[9]).trimmed());
         candidate.setLocation (QString (candidateDetails[10]).trimmed());
 
-        QString audioFilePath = mDataFolder + QDir::separator() + candidate.name() + "_" + QString::number(newSession.ID());
+        QString audioFilePath = mDataFolder + QDir::separator() + candidate.name() + "_" + QString::number(newSession.ID()) + ".wav";
         candidate.setAudioFilePath (audioFilePath.trimmed());
 
         newSession.addCandidate (candidate);
@@ -194,6 +194,7 @@ bool RCASMainWindow::createSessionFromCSVFile (const QString &fileName)
     mSession = newSession;
     mSessionID = newSession.ID();
 
+    saveSessionsToJson();
     return true;
 }
 

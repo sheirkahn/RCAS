@@ -18,6 +18,7 @@ public:
 
     bool sessionExists (const QString& name, const QString& date) const;
     void addSession (const RCASSession& session);
+    void setSession (int iSession, const RCASSession& newSession);
 
     void writeToJson (QJsonObject &json);
     void readFromJson (const QJsonObject &json);

@@ -32,6 +32,7 @@ public:
     void setAudioFilePath (const QString& path) { mAudioFilePath = path; mModified = true; }
     void setAssessmentStatus (RCASCandidateStatus status) { mAssessmentStatus = status; mModified = true; }
     void addError (const RCASAssessmentError& error) { mErrorList.append(error); mModified = true; }
+    void clearErrors () { mErrorList.clear(); mModified = true; }
     void setModified (bool val) { mModified = val; }
 
     const QString & name () const { return mName; }
